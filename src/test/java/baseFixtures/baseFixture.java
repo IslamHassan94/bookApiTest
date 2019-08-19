@@ -5,6 +5,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public class baseFixture {
+
     @BeforeClass
     public static void setup() {
         String port = System.getProperty("server.port");
@@ -24,11 +25,15 @@ public class baseFixture {
 
     }
     @AfterClass
+    //i means number and also id of created test data
+    //mockapi.io creates data auto increment way and starts 1.
     public static void teardown() {
-        RestAssured.given()
-                .contentType("application/json")
-                .delete(RestAssured.baseURI+"/book/1")
-                .then()
-                .statusCode(200);
+        for(int i=1;i<=4;i++){
+            RestAssured.given()
+                    .contentType("application/json")
+                    .delete(RestAssured.baseURI+"/book/"+i)
+                    .then()
+                    .statusCode(200);
+        }
     }
 }
