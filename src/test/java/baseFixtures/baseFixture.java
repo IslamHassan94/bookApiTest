@@ -28,7 +28,7 @@ public class baseFixture {
     //i means number and also id of created test data
     //mockapi.io creates data auto increment way and starts 1.
     public static void teardown() {
-        for(int i=1;i<=4;i++){
+        for(int i=1;i<=5;i++){
             RestAssured.given()
                     .contentType("application/json")
                     .delete(RestAssured.baseURI+"/book/"+i)

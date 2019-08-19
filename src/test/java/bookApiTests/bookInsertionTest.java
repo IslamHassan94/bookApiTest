@@ -80,7 +80,7 @@ public class bookInsertionTest extends baseFixtures.baseFixture {
     public void test_AuthorShouldNotBeNull(){
         Map<String, String> requestBody= new HashMap<String, String>();
         requestBody.put("author", null);
-        requestBody.put("title", "Test Title Author Required");
+        requestBody.put("title", "Test Title Author İs Null");
 
         Response r = RestAssured.given()
                 .contentType("application/json")
@@ -92,5 +92,22 @@ public class bookInsertionTest extends baseFixtures.baseFixture {
         //Thats why in this case, I check <author> key as "null" instead of <error> key.
         r.then()
                 .body("author", CoreMatchers.equalTo(null));
+    }
+    @Test(priority=7)
+    public void test_TitleShouldNotBeNull(){
+        Map<String, String> requestBody= new HashMap<String, String>();
+        requestBody.put("author", "Test Author Title İs Null");
+        requestBody.put("title", null);
+
+        Response r = RestAssured.given()
+                .contentType("application/json")
+                .body(requestBody)
+                .when()
+                .post(RestAssured.baseURI+"/book");
+        //In mockapi.io, it is not possible to put extra rules about null parameters.
+        //If I put null parameter, mockapi.io add value as null
+        //Thats why in this case, I check <title> key as "null" instead of <error> key.
+        r.then()
+                .body("title", CoreMatchers.equalTo(null));
     }
 }
